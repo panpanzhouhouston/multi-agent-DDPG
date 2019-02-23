@@ -18,8 +18,45 @@ In this project, we use a centralized critic/decentralized actor multi-agent rei
 
 ### Model Architechture
 
+- **_Actor Network_**
+    - Hidden: (state_size * agent_num, 256) - ReLU
+    - Hidden: (256, 128) - ReLU
+    - Output: (128, action_size) - TanH
+
+- **_Critic Network_**
+    - Hidden: (state_size * agent_num, 256) - ReLU
+    - Hidden: (256 + action_size * agent_num, 128) - ReLU
+    - Hidden: (128, 64) - ReLU
+    - Output: (64, 1) - Linear
 
 ### Hyperparameters
+ - BUFFER_SIZE = int(1e6)  # replay buffer size
+ - BATCH_SIZE = 128        # minibatch size
+ - GAMMA = 0.99            # discount factor
+ - TAU = 1e-3              # for soft update of target parameters
+ - device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") # the network is run on Nvida GPU  1080
+
+- **_Initial_Search_**
+ - LR_ACTOR = 1e-4        # learning rate of the actor 
+ - LR_CRITIC = 1e-4        # learning rate of the critic
+ - LR_DECAY = 1         # In each episode, the learning rate is decayed by a factor
+ - NOISE_DECAY_FACTOR = 1         # noise decay factor after each sampling
+ - sigma=0.5           # noise intensity in OUNoise
+ 
+ - **_Optimizing_**
+ - LR_ACTOR = 1e-5        # learning rate of the actor 
+ - LR_CRITIC = 1e-5        # learning rate of the critic
+ - LR_DECAY = 1         # In each episode, the learning rate is decayed by a factor
+ - NOISE_DECAY_FACTOR = 1         # noise decay factor after each sampling
+ - sigma=0.1            # noise intensity in OUNoise
+ 
+  - **_Finalizing_**
+ - LR_ACTOR = 1e-6        # learning rate of the actor 
+ - LR_CRITIC = 1e-6        # learning rate of the critic
+ - LR_DECAY = 1         # In each episode, the learning rate is decayed by a factor
+ - NOISE_DECAY_FACTOR = 0.99         # noise decay factor after each sampling
+ - sigma=0.01            # noise intensity in OUNoise
+
 
 ### Results
 
